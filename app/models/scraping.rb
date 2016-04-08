@@ -27,8 +27,11 @@ class Scraping
     page = agent.get(link)
     title = page.at('.moveInfoBox h1').inner_text if page.at('.moveInfoBox h1')
     image_url = page.at('.pictBox img')[:src] if page.at('.pictBox img')
+    director = page.at('.staffBox .f span').inner_text if page.at('.staffBox .f span')
+    detail = page.at('.outline p').inner_text if page.at('.outline p')
+    open_date = page.at('.opn_date strong')[:content] if page.at('.opn_date strong')
 
-    product = Product.where(title: title, image_url: image_url).first_or_initialize
+    product = Product.where(title: title, image_url: image_url, director: director, detail: detail, open_date: open_date).first_or_initialize
     product.save
   end
 end
